@@ -1,4 +1,6 @@
 use rand::{seq::SliceRandom, Rng};
+#[cfg(feature = "serialize")]
+use serde::{Deserialize, Serialize};
 
 const PERMUTATION_TABLE: [u8; 256] = [
     151, 160, 137, 91, 90, 15, 131, 13, 201, 95, 96, 53, 194, 233, 7, 225, 140, 36, 103, 30, 69,
@@ -29,6 +31,8 @@ fn gradient_dot_weighted(
         * ((gradient_x * offset_x) + (gradient_y * offset_y))
 }
 
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[derive(Debug, Clone)]
 pub struct Perlin2 {
     grads: Vec<(f64, f64)>,
 }
